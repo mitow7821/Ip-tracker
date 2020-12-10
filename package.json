@@ -1,0 +1,25 @@
+{
+  "name": "ip-address-tracker-master",
+  "version": "1.0.0",
+  "description": "![Design preview for the IP Address Tracker coding challenge](./design/desktop-preview.jpg)",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "connect-livereload": "^0.6.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "livereload": "^0.9.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "node-sass": "^5.0.0"
+  },
+  "scripts": {
+    "start": "nodemon --ext js,ejs --ignore public",
+    "watch": "node-sass --watch --output-style compressed scss/main.scss public/style.css",
+    "dev": "concurrently \"npm run start\" \"npm run watch\""
+  },
+  "author": "",
+  "license": "ISC"
+}

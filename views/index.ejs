@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <title>IP Address Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <form action="/" method="POST">
+    <h1>IP Address Tracker</h1>
+
+    <div>
+      <input type="text" placeholder="Search for any IP address or domain" name="ip">
+      <input type="submit">
+    </div>
+
+    <% if (data) { %>
+    <div class="info" data-lat="<%= data.location.lat %>" data-lng="<%= data.location.lng; %>">
+      <div class="box">
+        <h2 class="heading">IP Address</h2>
+        <span class="ip"><%= data.ip %> </span>
+      </div>
+      <div class="box">
+        <h2 class="heading">Location</h2>
+        <span class="location">
+          <%= data.location.city %>,
+          <%= data.location.region %>
+          <br>
+          <%= data.location.postalCode %>
+        </span>
+      </div>
+      <div class="box">
+        <h2 class="heading">Timezone</h2>
+        <span class="utc">
+          <%= 'UTC'+data.location.timezone %>
+        </span>
+      </div>
+      <div class="box">
+        <h2 class="heading">ISP</h2>
+        <span class="isp"><%= data.isp %> </span>
+      </div>
+    </div>
+    <% } %>
+  </form>
+
+  <% if (data) { %>
+
+  <div id="mapid"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <script>
+    (async () => {
+      const apiURL = `http://localhost:3001/api`;
+      const response = await axios.get(apiURL);
+      const data = response.data;
+      console.log(data)
+      const cord = document.querySelector('.info');
+      const lat = cord.dataset.lat;
+      const lng = cord.dataset.lng;
+
+      var mymap = L.map('mapid').setView([lat, lng], 16);
+      var marker = L.marker([lat, lng]).addTo(mymap);
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiZGF3aWQ3ODIxIiwiYSI6ImNraWYxNTVkcTBmZWIycm54bDF2OHh4NmMifQ.lYge-xeKmQyR_D7gaHZHfg'
+      }).addTo(mymap);
+    })()
+
+  </script>
+  <% } %>
+
+  <% if (!data) { %>
+  <script>alert("Something went wrong!")</script>
+  <% } %>
+</body>
+
+</html>
