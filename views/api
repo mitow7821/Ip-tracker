@@ -1,0 +1,14 @@
+-- CLIENT SIDE : 
+
+(async () => {
+  const apiURL = `http://localhost:3001/api`;
+  const response = await axios.get(apiURL);
+  const data = response.data;
+  console.log(data)
+})()
+
+-- SERVER SIDE :
+
+app.get("/api", async (req, res) => {
+  res.json({ lat: "srat" });
+});

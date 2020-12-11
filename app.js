@@ -34,39 +34,35 @@ const getData = async (ip) => {
   return response.data;
 };
 
-app.get("/", async (req, res) => {
-  app.locals.data = app.locals.data || { ip: "8.8.8.8" };
+const processData = async () => {
   let data;
+  let modal = "hidden";
   try {
     data = await getData(app.locals.data.ip).then((response) => {
       return response;
     });
   } catch (err) {
     data = null;
+    modal = "showed";
   }
+  return { data, modal };
+};
 
-  res.render("index", { data });
+app.get("/", async (req, res) => {
+  app.locals.data = app.locals.data || { ip: "8.8.8.8" };
+  let { data, modal } = await processData();
+  res.render("index", { data, modal });
 });
 
 app.post("/", async (req, res) => {
   app.locals.data = {};
   app.locals.data = req.body;
-  let data;
-  try {
-    data = await getData(app.locals.data.ip).then((response) => {
-      return response;
-    });
-  } catch (err) {
-    data = null;
-  }
-
-  res.render("index", { data });
+  let { data, modal } = await processData();
+  res.render("index", { data, modal });
 });
 
-app.get("/api", async (req, res) => {
-  res.json({ lat: "srat" });
-});
-//404 page
+
+// 404 page
 app.use((req, res) => {
   res.status(404).sendFile("./views/404.html", { root: __dirname });
 });

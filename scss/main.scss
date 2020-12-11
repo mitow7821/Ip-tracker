@@ -87,38 +87,44 @@ form {
     z-index: 1;
 }
 
-.error {
-    display: grid;
-    place-items: center;
+.modalContainer {
     position: fixed;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -30%);
-    z-index: 3;
     width: 100%;
     height: 100%;
-    background-color: #fff;
-    box-shadow: 0 0 25px 15px rgba(92, 92, 92, 0.295);
-    .message {
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    place-items: center;
+    &.hidden {
+        display: none;
+    }
+    &.showed {
+        display: grid;
+    }
+    .modal {
         text-align: center;
-        font-size: 1.4rem;
-        strong {
-            font-size: 2rem;
-            display: block;
-            padding-bottom: 20px;
-            color: rgb(204, 57, 57);
+        border-radius: 10px;
+        width: 50%;
+        height: 40%;
+        background-color: #fff;
+        box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.15);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+        p {
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: rgb(218, 38, 38);
         }
         a {
-            font-size: 1.2rem;
-            color: #333;
-            display: block;
-            font-weight: 600;
+            margin-top: 1.5rem;
+            color: #fff;
+            font-size: 1.3rem;
             text-decoration: none;
-            width: 50%;
-            margin: 25px auto;
-            border: #333 2px solid;
+            padding: 0.2rem 0.5rem;
+            border: 2px solid #333;
             border-radius: 3px;
-            padding: 5px 0;
+            background-color: rgba(0, 0, 0, 0.7);
         }
     }
 }
