@@ -24,7 +24,8 @@ form {
         font-weight: 500;
         font-size: clamp(1.4rem, 1.7vw, 2.5rem);
     }
-    div {
+    .inputs {
+        display: flex;
         input {
             height: 2.7rem;
             border: none;
@@ -36,12 +37,25 @@ form {
             margin-right: -10px;
             border-radius: 10px 0 0 10px;
         }
-        input[type="submit"] {
+        button[type="submit"] {
+            outline: none;
+            border: none;
             width: 2.8rem;
             border-radius: 0 10px 10px 0;
             background-color: #000;
+            color: #000;
+            position: relative;
             &:hover {
                 cursor: pointer;
+                background-color: hsl(0, 0%, 17%);
+                color: hsl(0, 0%, 17%);
+            }
+            &::after {
+                content: url(images/icon-arrow.svg);
+                position: absolute;
+                top: 53%;
+                left: 52%;
+                transform: translate(-50%, -50%) scale(0.8);
             }
         }
     }
@@ -125,6 +139,41 @@ form {
             border: 2px solid #333;
             border-radius: 3px;
             background-color: rgba(0, 0, 0, 0.7);
+        }
+    }
+}
+
+@media (max-width: 850px) {
+    form {
+        .inputs {
+            input[type="text"] {
+                width: calc(80vw - 2.8rem);
+            }
+        }
+    }
+    .info {
+        flex-direction: column;
+        width: 80vw;
+        align-items: center;
+        .box {
+            margin: 0;
+            margin-bottom: 1.85rem;
+            text-align: center;
+            &:first-child {
+                margin-top: 2.1rem;
+            }
+            &:last-child {
+                margin-bottom: 2.1rem;
+            }
+            &:not(:last-child) {
+                border-right: 0;
+            }
+        }
+    }
+    .modalContainer .modal {
+        width: 80vw;
+        p {
+            font-size: 1.5rem;
         }
     }
 }
